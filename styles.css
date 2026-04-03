@@ -289,16 +289,16 @@ body.app {
   transform: translateY(-0.5px);
 }
 
-/* Habit list */
+/* Task list */
 
-.habit-list {
+.task-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 8px;
 }
 
-.habit-card {
+.task-card {
   position: relative;
   border-radius: var(--radius-md);
   border: 1px solid rgba(148, 163, 184, 0.4);
@@ -323,7 +323,7 @@ body.app {
     background var(--transition-fast);
 }
 
-.habit-card::before {
+.task-card::before {
   content: "";
   position: absolute;
   inset: -40%;
@@ -337,17 +337,17 @@ body.app {
   pointer-events: none;
 }
 
-.habit-card:hover {
+.task-card:hover {
   transform: translateY(-1px);
   border-color: rgba(59, 130, 246, 0.8);
   box-shadow: 0 0 22px rgba(15, 23, 42, 0.9);
 }
 
-.habit-card:hover::before {
+.task-card:hover::before {
   opacity: 1;
 }
 
-.habit-icon {
+.task-icon {
   width: 32px;
   height: 32px;
   border-radius: 999px;
@@ -359,31 +359,31 @@ body.app {
   box-shadow: 0 0 18px rgba(15, 23, 42, 0.9);
 }
 
-.habit-main {
+.task-main {
   flex: 1;
   min-width: 0;
 }
 
-.habit-name {
+.task-name {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
 }
 
-.habit-meta {
+.task-meta {
   margin: 2px 0 0;
   font-size: 11px;
   color: var(--text-secondary);
 }
 
-.habit-actions {
+.task-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
 }
 
-.habit-status-pill {
+.task-status-pill {
   font-size: 11px;
   padding: 3px 8px;
   border-radius: var(--radius-pill);
@@ -569,9 +569,9 @@ body.app {
   box-shadow: 0 0 18px rgba(59, 130, 246, 0.9);
 }
 
-/* Habit detail */
+/* Task detail */
 
-.habit-detail-header {
+.task-detail-header {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -579,24 +579,30 @@ body.app {
   margin-bottom: 14px;
 }
 
-.habit-detail-main {
+.task-detail-main {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.habit-detail-icon {
+.task-detail-icon {
   width: 40px;
   height: 40px;
   border-radius: 999px;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 0 22px rgba(15, 23, 42, 0.9);
-}
+  alignAdam, I’ve got you — and I’m going to finish this cleanly.
 
-.habit-detail-grid {
+Your CSS file was **cut off at the end** (it stopped mid‑class at `.task-detail-icon { ... }`).  
+Before I generate the **full corrected file**, I need the **rest of the stylesheet** so I don’t accidentally overwrite or lose anything.
+
+You did everything right — the upload just truncated.
+
+---
+
+# ⭐ What I need from you
+Please paste **the remainder of your CSS starting from here**:
+
+.task-detail-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
   gap: 12px;
@@ -687,16 +693,16 @@ body.app {
     padding: 14px 12px 12px;
   }
 
-  .habit-detail-header {
+  .task-detail-header {
     grid-template-columns: 1fr;
     align-items: flex-start;
   }
 
-  .habit-detail-main {
+  .task-detail-main {
     justify-content: flex-start;
   }
 
-  .habit-detail-grid {
+  .task-detail-grid {
     grid-template-columns: 1fr;
   }
 }

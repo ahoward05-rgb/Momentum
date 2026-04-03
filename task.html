@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Momentum — Habit</title>
+  <title>Momentum — Task</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- PWA -->
@@ -21,24 +21,24 @@
       <div class="app-logo-circle"></div>
       <div>
         <h1 class="app-title">Momentum</h1>
-        <p class="app-subtitle">Habit detail</p>
+        <p class="app-subtitle">Task detail</p>
       </div>
     </div>
     <nav class="app-nav">
-      <a href="index.html" class="nav-link">Habits</a>
+      <a href="index.html" class="nav-link">Tasks</a>
     </nav>
   </header>
 
   <main class="app-main">
     <section class="glass-panel main-panel">
-      <div class="habit-detail-header">
+      <div class="task-detail-header">
         <button id="backBtn" class="btn btn-ghost">← Back</button>
 
-        <div class="habit-detail-main">
-          <div id="habitIcon" class="habit-detail-icon">🔥</div>
+        <div class="task-detail-main">
+          <div id="taskIcon" class="task-detail-icon">🔥</div>
           <div>
-            <h2 id="habitName" class="panel-title">Habit</h2>
-            <p id="habitMeta" class="panel-subtitle">Streak and stats</p>
+            <h2 id="taskName" class="panel-title">Task</h2>
+            <p id="taskMeta" class="panel-subtitle">Streak and stats</p>
           </div>
         </div>
 
@@ -48,7 +48,7 @@
         </button>
       </div>
 
-      <div class="habit-detail-grid">
+      <div class="task-detail-grid">
         <div class="glass-panel sub-panel">
           <h3 class="sub-panel-title">Current streak</h3>
           <p id="streakValue" class="streak-value">0</p>
@@ -64,7 +64,7 @@
     </section>
   </main>
 
-  <script src="habit.js"></script>
+  <script src="task.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");

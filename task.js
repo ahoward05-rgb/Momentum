@@ -1,6 +1,6 @@
-const STORAGE_KEY = "momentum_habits";
+const STORAGE_KEY = "momentum_tasks";
 
-function loadHabits() {
+function loadTasks() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return [];
   try {
@@ -10,8 +10,8 @@ function loadHabits() {
   }
 }
 
-function saveHabits(habits) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+function saveTasks(tasks) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
 function todayISO() {
@@ -41,36 +41,36 @@ function calculateStreak(history) {
   return streak;
 }
 
-function getHabitFromQuery() {
+function getTaskFromQuery() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
   if (!id) return null;
-  const habits = loadHabits();
-  return habits.find((h) => h.id === id) || null;
+  const tasks = loadTasks();
+  return tasks.find((t) => t.id === id) || null;
 }
 
-function renderHabit() {
-  const habit = getHabitFromQuery();
-  if (!habit) {
+function renderTask() {
+  const task = getTaskFromQuery();
+  if (!task) {
     window.location.href = "index.html";
     return;
   }
 
   const today = todayISO();
-  const streak = calculateStreak(habit.history || []);
-  const doneToday = (habit.history || []).includes(today);
+  const streak = calculateStreak(task.history || []);
+  const doneToday = (task.history || []).includes(today);
 
-  const iconEl = document.getElementById("habitIcon");
-  const nameEl = document.getElementById("habitName");
-  const metaEl = document.getElementById("habitMeta");
+  const iconEl = document.getElementById("taskIcon");
+  const nameEl = document.getElementById("taskName");
+  const metaEl = document.getElementById("taskMeta");
   const streakEl = document.getElementById("streakValue");
   const completeBtn = document.getElementById("completeTodayBtn");
 
-  iconEl.textContent = habit.icon || "🔥";
-  iconEl.style.background = habit.color || "#1d4ed8";
-  iconEl.style.boxShadow = `0 0 22px ${habit.color || "#1d4ed8"}`;
+  iconEl.textContent = task.icon || "🔥";
+  iconEl.style.background = task.color || "#1d4ed8";
+  iconEl.style.boxShadow = `0 0 22px ${task.color || "#1d4ed8"}`;
 
-  nameEl.textContent = habit.name;
+  nameEl.textContent = task.name;
   metaEl.textContent = `${streak} day streak • ${
     doneToday ? "Completed today" : "Not yet today"
   }`;
@@ -81,14 +81,14 @@ function renderHabit() {
     ? "Undo today"
     : "Mark today complete";
 
-  renderWeeklyChart(habit);
+  renderWeeklyChart(task);
 }
 
-function renderWeeklyChart(habit) {
+function renderWeeklyChart(task) {
   const container = document.getElementById("weeklyChart");
   container.innerHTML = "";
 
-  const history = new Set(habit.history || []);
+  const history = new Set(task.history || []);
   const today = new Date(todayISO());
 
   const days = [];
@@ -126,22 +126,22 @@ function toggleToday() {
   const id = params.get("id");
   if (!id) return;
 
-  const habits = loadHabits();
-  const idx = habits.findIndex((h) => h.id === id);
+  const tasks = loadTasks();
+  const idx = tasks.findIndex((t) => t.id === id);
   if (idx === -1) return;
 
   const today = todayISO();
-  const history = habits[idx].history || [];
+  const history = tasks[idx].history || [];
   const hasToday = history.includes(today);
 
   if (hasToday) {
-    habits[idx].history = history.filter((d) => d !== today);
+    tasks[idx].history = history.filter((d) => d !== today);
   } else {
-    habits[idx].history = [...history, today];
+    tasks[idx].history = [...history, today];
   }
 
-  saveHabits(habits);
-  renderHabit();
+  saveTasks(tasks);
+  renderTask();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -154,5 +154,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   completeTodayBtn.addEventListener("click", toggleToday);
 
-  renderHabit();
+  renderTask();
 });
