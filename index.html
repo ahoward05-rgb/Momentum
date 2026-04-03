@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Momentum — Habits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app app--midnight">
+  <div class="bg-gradient"></div>
+  <div class="noise-overlay"></div>
+
+  <header class="app-header glass-panel">
+    <div class="app-header-left">
+      <div class="app-logo-circle"></div>
+      <div>
+        <h1 class="app-title">Momentum</h1>
+        <p class="app-subtitle">Build streaks. Stay in motion.</p>
+      </div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" class="nav-link nav-link--active">Habits</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <section class="glass-panel main-panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Your habits</h2>
+          <p class="panel-subtitle">Tap a habit to view details and weekly progress.</p>
+        </div>
+        <button id="addHabitBtn" class="btn btn-primary">
+          <span class="btn-glow"></span>
+          <span class="btn-label">+ New habit</span>
+        </button>
+      </div>
+
+      <div id="habitList" class="habit-list"></div>
+
+      <div id="emptyState" class="empty-state">
+        <p class="empty-title">No habits yet</p>
+        <p class="empty-text">Create your first habit to start building momentum.</p>
+        <button class="btn btn-secondary" id="emptyAddHabitBtn">
+          <span class="btn-label">Create a habit</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add Habit Modal -->
+  <div id="habitModal" class="modal-backdrop hidden">
+    <div class="modal glass-panel">
+      <div class="modal-header">
+        <h3 class="modal-title">New habit</h3>
+        <button id="closeModalBtn" class="icon-button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="field">
+          <span class="field-label">Preset habit</span>
+          <select id="habitPresetSelect" class="field-select">
+            <option value="">Choose a preset (optional)</option>
+            <option value="Read 10 pages">Read 10 pages</option>
+            <option value="Drink water">Drink water</option>
+            <option value="Exercise">Exercise</option>
+            <option value="Meditate">Meditate</option>
+            <option value="Sleep by 11pm">Sleep by 11pm</option>
+            <option value="Journal">Journal</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Custom habit name (required if “Other”)</span>
+          <input
+            id="habitNameInput"
+            type="text"
+            class="field-input"
+            placeholder="e.g. Call mom, Stretch, Storm chase"
+          />
+        </label>
+
+        <div class="field">
+          <span class="field-label">Icon</span>
+          <div id="iconPicker" class="icon-picker"></div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Accent color</span>
+          <div id="colorPicker" class="color-picker"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="saveHabitBtn" class="btn btn-primary btn-full">
+          <span class="btn-glow"></span>
+          <span class="btn-label">Save habit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>

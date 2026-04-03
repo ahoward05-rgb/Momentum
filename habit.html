@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Momentum — Habit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app app--midnight">
+  <div class="bg-gradient"></div>
+  <div class="noise-overlay"></div>
+
+  <header class="app-header glass-panel">
+    <div class="app-header-left">
+      <div class="app-logo-circle"></div>
+      <div>
+        <h1 class="app-title">Momentum</h1>
+        <p class="app-subtitle">Habit detail</p>
+      </div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" class="nav-link">Habits</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <section class="glass-panel main-panel">
+      <div class="habit-detail-header">
+        <button id="backBtn" class="btn btn-ghost">← Back</button>
+
+        <div class="habit-detail-main">
+          <div id="habitIcon" class="habit-detail-icon">🔥</div>
+          <div>
+            <h2 id="habitName" class="panel-title">Habit</h2>
+            <p id="habitMeta" class="panel-subtitle">Streak and stats</p>
+          </div>
+        </div>
+
+        <button id="completeTodayBtn" class="btn btn-primary">
+          <span class="btn-glow"></span>
+          <span class="btn-label">Mark today complete</span>
+        </button>
+      </div>
+
+      <div class="habit-detail-grid">
+        <div class="glass-panel sub-panel">
+          <h3 class="sub-panel-title">Current streak</h3>
+          <p id="streakValue" class="streak-value">0</p>
+          <p class="sub-panel-subtitle">consecutive days</p>
+        </div>
+
+        <div class="glass-panel sub-panel">
+          <h3 class="sub-panel-title">Weekly progress</h3>
+          <div id="weeklyChart" class="weekly-chart"></div>
+          <p class="sub-panel-subtitle">Last 7 days</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="habit.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>
