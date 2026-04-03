@@ -1,10 +1,11 @@
-const CACHE_NAME = "momentum-cache-v1";
+const CACHE_NAME = "momentum-cache-v2";
+
 const FILES_TO_CACHE = [
   "index.html",
-  "habit.html",
+  "task.html",
   "styles.css",
   "app.js",
-  "habit.js",
+  "task.js",
   "manifest.json",
   "icons/icon-192.png",
   "icons/icon-512.png"
