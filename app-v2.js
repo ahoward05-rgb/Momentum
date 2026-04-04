@@ -1,6 +1,6 @@
-const STORAGE_KEY = "momentum_habits";
+const STORAGE_KEY = "momentum_tasks";
 
-function loadHabits() {
+function loadTasks() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return [];
   try {
@@ -10,8 +10,8 @@ function loadHabits() {
   }
 }
 
-function saveHabits(habits) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+function saveTasks(tasks) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
 function todayISO() {
@@ -41,14 +41,14 @@ function calculateStreak(history) {
   return streak;
 }
 
-function renderHabits() {
-  const habitList = document.getElementById("habitList");
+function renderTasks() {
+  const taskList = document.getElementById("taskList");
   const emptyState = document.getElementById("emptyState");
-  const habits = loadHabits();
+  const tasks = loadTasks();
 
-  habitList.innerHTML = "";
+  taskList.innerHTML = "";
 
-  if (!habits.length) {
+  if (!tasks.length) {
     emptyState.style.display = "block";
     return;
   } else {
@@ -57,28 +57,28 @@ function renderHabits() {
 
   const today = todayISO();
 
-  habits.forEach((habit) => {
+  tasks.forEach((task) => {
     const card = document.createElement("div");
-    card.className = "habit-card";
+    card.className = "task-card";
 
     const icon = document.createElement("div");
-    icon.className = "habit-icon";
-    icon.textContent = habit.icon || "🔥";
-    icon.style.background = habit.color || "#1d4ed8";
-    icon.style.boxShadow = `0 0 18px ${habit.color || "#1d4ed8"}`;
+    icon.className = "task-icon";
+    icon.textContent = task.icon || "🔥";
+    icon.style.background = task.color || "#1d4ed8";
+    icon.style.boxShadow = `0 0 18px ${task.color || "#1d4ed8"}`;
 
     const main = document.createElement("div");
-    main.className = "habit-main";
+    main.className = "task-main";
 
     const nameEl = document.createElement("p");
-    nameEl.className = "habit-name";
-    nameEl.textContent = habit.name;
+    nameEl.className = "task-name";
+    nameEl.textContent = task.name;
 
-    const streak = calculateStreak(habit.history || []);
-    const doneToday = (habit.history || []).includes(today);
+    const streak = calculateStreak(task.history || []);
+    const doneToday = (task.history || []).includes(today);
 
     const metaEl = document.createElement("p");
-    metaEl.className = "habit-meta";
+    metaEl.className = "task-meta";
     metaEl.textContent = `${streak} day streak • ${
       doneToday ? "Completed today" : "Not yet today"
     }`;
@@ -87,10 +87,10 @@ function renderHabits() {
     main.appendChild(metaEl);
 
     const actions = document.createElement("div");
-    actions.className = "habit-actions";
+    actions.className = "task-actions";
 
     const status = document.createElement("div");
-    status.className = "habit-status-pill";
+    status.className = "task-status-pill";
     status.textContent = doneToday ? "Done today" : "Tap to complete";
 
     const completeBtn = document.createElement("button");
@@ -101,7 +101,7 @@ function renderHabits() {
 
     completeBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      toggleToday(habit.id);
+      toggleToday(task.id);
     });
 
     actions.appendChild(status);
@@ -112,38 +112,38 @@ function renderHabits() {
     card.appendChild(actions);
 
     card.addEventListener("click", () => {
-      window.location.href = `habit.html?id=${encodeURIComponent(habit.id)}`;
+      window.location.href = `task.html?id=${encodeURIComponent(task.id)}`;
     });
 
-    habitList.appendChild(card);
+    taskList.appendChild(card);
   });
 }
 
 function toggleToday(id) {
-  const habits = loadHabits();
+  const tasks = loadTasks();
   const today = todayISO();
-  const idx = habits.findIndex((h) => h.id === id);
+  const idx = tasks.findIndex((t) => t.id === id);
   if (idx === -1) return;
 
-  const history = habits[idx].history || [];
+  const history = tasks[idx].history || [];
   const hasToday = history.includes(today);
 
   if (hasToday) {
-    habits[idx].history = history.filter((d) => d !== today);
+    tasks[idx].history = history.filter((d) => d !== today);
   } else {
-    habits[idx].history = [...history, today];
+    tasks[idx].history = [...history, today];
   }
 
-  saveHabits(habits);
-  renderHabits();
+  saveTasks(tasks);
+  renderTasks();
 }
 
 function openModal() {
-  document.getElementById("habitModal").classList.remove("hidden");
+  document.getElementById("taskModal").classList.remove("hidden");
 }
 
 function closeModal() {
-  document.getElementById("habitModal").classList.add("hidden");
+  document.getElementById("taskModal").classList.add("hidden");
 }
 
 function setupIconPicker() {
@@ -206,25 +206,22 @@ function setupColorPicker() {
   if (first) first.classList.add("selected");
 }
 
-function createHabit() {
-  const nameInput = document.getElementById("habitNameInput");
-  const presetSelect = document.getElementById("habitPresetSelect");
+function createTask() {
+  const nameInput = document.getElementById("taskNameInput");
+  const presetSelect = document.getElementById("taskPresetSelect");
 
   const preset = presetSelect.value;
   let name = nameInput.value.trim();
 
-  // If preset is chosen and not "Other" and name is empty, use preset as name
   if (preset && preset !== "Other" && !name) {
     name = preset;
   }
 
-  // If preset is "Other", custom name is required
   if (preset === "Other" && !name) {
     nameInput.focus();
     return;
   }
 
-  // If no preset and no name, block
   if (!preset && !name) {
     nameInput.focus();
     return;
@@ -236,10 +233,10 @@ function createHabit() {
   const icon = iconEl ? iconEl.textContent : "🔥";
   const color = colorEl ? colorEl.dataset.color : "#3b82f6";
 
-  const habits = loadHabits();
+  const tasks = loadTasks();
   const id = Date.now().toString();
 
-  const newHabit = {
+  const newTask = {
     id,
     name,
     icon,
@@ -247,10 +244,9 @@ function createHabit() {
     history: [],
   };
 
-  habits.push(newHabit);
-  saveHabits(habits);
+  tasks.push(newTask);
+  saveTasks(tasks);
 
-  // Reset fields
   nameInput.value = "";
   presetSelect.value = "";
   document
@@ -264,30 +260,30 @@ function createHabit() {
   setupColorPicker();
 
   closeModal();
-  renderHabits();
+  renderTasks();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const addHabitBtn = document.getElementById("addHabitBtn");
-  const emptyAddHabitBtn = document.getElementById("emptyAddHabitBtn");
+  const addTaskBtn = document.getElementById("addTaskBtn");
+  const emptyAddTaskBtn = document.getElementById("emptyAddTaskBtn");
   const closeModalBtn = document.getElementById("closeModalBtn");
-  const saveHabitBtn = document.getElementById("saveHabitBtn");
+  const saveTaskBtn = document.getElementById("saveTaskBtn");
 
-  addHabitBtn.addEventListener("click", openModal);
-  emptyAddHabitBtn.addEventListener("click", openModal);
+  addTaskBtn.addEventListener("click", openModal);
+  emptyAddTaskBtn.addEventListener("click", openModal);
   closeModalBtn.addEventListener("click", closeModal);
 
   document
-    .getElementById("habitModal")
+    .getElementById("taskModal")
     .addEventListener("click", (event) => {
-      if (event.target.id === "habitModal") {
+      if (event.target.id === "taskModal") {
         closeModal();
       }
     });
 
-  saveHabitBtn.addEventListener("click", createHabit);
+  saveTaskBtn.addEventListener("click", createTask);
 
   setupIconPicker();
   setupColorPicker();
-  renderHabits();
+  renderTasks();
 });
